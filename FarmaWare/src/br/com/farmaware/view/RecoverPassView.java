@@ -8,8 +8,6 @@ package br.com.farmaware.view;
 import br.com.farmaware.dao.UserDAO;
 import br.com.farmaware.model.User;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,16 +38,16 @@ public class RecoverPassView extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtPasswd = new javax.swing.JTextField();
-        txtPassConfirm = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
+        txtPassConfirm = new javax.swing.JPasswordField();
         btnRedefinir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         mainWrapper2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Helvetica", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(102, 102, 102));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Redefinir Senha");
@@ -59,25 +57,17 @@ public class RecoverPassView extends javax.swing.JFrame {
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("<html>Farma<b>Ware</b></html>");
 
-        jLabel11.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(102, 102, 102));
         jLabel11.setText("Nova Senha:");
 
-        txtPasswd.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPasswdFocusLost(evt);
-            }
-        });
-
-        txtPassConfirm.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPassConfirmFocusLost(evt);
-            }
-        });
-
-        jLabel12.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(102, 102, 102));
         jLabel12.setText("Confirmar Senha:");
+
+        txtPass.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+
+        txtPassConfirm.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout mainWrapper2Layout = new javax.swing.GroupLayout(mainWrapper2);
         mainWrapper2.setLayout(mainWrapper2Layout);
@@ -87,33 +77,35 @@ public class RecoverPassView extends javax.swing.JFrame {
             .addComponent(jLabel10)
             .addGroup(mainWrapper2Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(mainWrapper2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(mainWrapper2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtPassConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12)
                     .addComponent(jLabel11)
-                    .addComponent(txtPasswd, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                    .addComponent(txtPassConfirm))
-                .addGap(50, 50, 50))
+                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainWrapper2Layout.setVerticalGroup(
             mainWrapper2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainWrapper2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel9)
-                .addGap(26, 26, 26)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
 
-        btnRedefinir.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnRedefinir.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        btnRedefinir.setForeground(new java.awt.Color(102, 102, 102));
         btnRedefinir.setText("Redefinir Senha");
+        btnRedefinir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRedefinir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRedefinirActionPerformed(evt);
@@ -134,19 +126,24 @@ public class RecoverPassView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(mainWrapper2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(20, 20, 20)
                 .addComponent(btnRedefinir, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRedefinirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRedefinirActionPerformed
-        String passwd = txtPasswd.getText();
-        String passwdConfirm = txtPassConfirm.getText();
+        String passwd = "";
+        for(char c : txtPass.getPassword())
+            passwd += c;
+        
+        String passwdConfirm = "";
+        for(char c : txtPassConfirm.getPassword())
+            passwdConfirm += c;
 
-        if(passwd.equals("") || !passwd.matches("^.{8}$") || passwdConfirm.equals("") || !passwdConfirm.matches("^.{8}$")){
+        if(passwd.equals("") || passwdConfirm.equals("") || !passwd.matches("^.{8}$") || !passwdConfirm.matches("^.{8}$")){
             JOptionPane.showMessageDialog(this, "Insira uma senha válida de 8 dígitos!", "Atenção", 0);
             return;
         }
@@ -159,13 +156,18 @@ public class RecoverPassView extends javax.swing.JFrame {
         UserDAO dao = new UserDAO();
         try {
             user = dao.search(user);
+            if(user == null){
+                JOptionPane.showMessageDialog(this, "Usuário não existe!", "Erro", 0);
+                this.dispose();
+                return;
+            }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Erro de SQL: \n" + ex.getMessage(), "Erro", 0);
         } catch (ClassNotFoundException ex) {
             JOptionPane.showMessageDialog(this, "Erro de Classe: \n" + ex.getMessage(), "Erro", 0);
         }
         
-        user.setPasswd(txtPasswd.getText());
+        user.setPasswd(passwd);
         
         boolean success = false;
         try {
@@ -177,26 +179,10 @@ public class RecoverPassView extends javax.swing.JFrame {
         }
         
         if(success){
-            JOptionPane.showMessageDialog(this, "Senha redefinida com sucesso!", "Sucesso", 0);
+            JOptionPane.showMessageDialog(this, "Senha redefinida com sucesso!", "Sucesso", 2);
             this.dispose();
         }
     }//GEN-LAST:event_btnRedefinirActionPerformed
-
-    private void txtPasswdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswdFocusLost
-        try{
-            txtPasswd.setText(txtPasswd.getText().substring(0,8));
-        } catch(Exception ex){
-            
-        }
-    }//GEN-LAST:event_txtPasswdFocusLost
-
-    private void txtPassConfirmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPassConfirmFocusLost
-        try{
-            txtPassConfirm.setText(txtPassConfirm.getText().substring(0,8));
-        } catch(Exception ex){
-            
-        }
-    }//GEN-LAST:event_txtPassConfirmFocusLost
 
     /**
      * @param args the command line arguments
@@ -240,7 +226,7 @@ public class RecoverPassView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel mainWrapper2;
-    private javax.swing.JTextField txtPassConfirm;
-    private javax.swing.JTextField txtPasswd;
+    private javax.swing.JPasswordField txtPass;
+    private javax.swing.JPasswordField txtPassConfirm;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,8 +3,6 @@ package br.com.farmaware.view;
 import br.com.farmaware.dao.UserDAO;
 import br.com.farmaware.model.User;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,11 +10,12 @@ import javax.swing.JOptionPane;
  * @author lucasdm
  */
 public class UserView extends javax.swing.JFrame {
-    User user = null;
+    private User user = null;
+    private boolean isFirstUser = false;
     /**
      * Creates new form LoginView
      */
-    public UserView(User user) {
+    public UserView(User user, boolean isFirstUser) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.user = user;
@@ -39,6 +38,11 @@ public class UserView extends javax.swing.JFrame {
             txtPass.setText(user.getPasswd());
             cbCateg.setSelectedIndex(user.getCateg());
         }
+            
+        this.isFirstUser = isFirstUser;
+        cbCateg.setSelectedIndex(0);
+        cbCateg.setEnabled(!isFirstUser);
+        btnCancel.setVisible(!isFirstUser);
     }
 
     /**
@@ -64,17 +68,22 @@ public class UserView extends javax.swing.JFrame {
         btnAction = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         mainWrapper.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblAction.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        lblAction.setFont(new java.awt.Font("Helvetica", 1, 24)); // NOI18N
         lblAction.setForeground(new java.awt.Color(102, 102, 102));
         lblAction.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAction.setText("Cadastrar Usuário");
 
-        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Helvetica", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("<html>Farma<b>Ware</b></html>");
@@ -83,10 +92,15 @@ public class UserView extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("CPF:");
 
+        txtCpf.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+
+        txtName.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Nome:");
 
+        txtPass.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         txtPass.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 txtPassFocusLost(evt);
@@ -101,10 +115,10 @@ public class UserView extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
         jLabel6.setText("Categoria:");
 
-        cbCateg.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        cbCateg.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         cbCateg.setForeground(new java.awt.Color(102, 102, 102));
         cbCateg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gerente", "Atendente" }));
-        cbCateg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        cbCateg.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout mainWrapperLayout = new javax.swing.GroupLayout(mainWrapper);
         mainWrapper.setLayout(mainWrapperLayout);
@@ -113,7 +127,7 @@ public class UserView extends javax.swing.JFrame {
             .addComponent(lblAction, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2)
             .addGroup(mainWrapperLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(20, 20, 20)
                 .addGroup(mainWrapperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
@@ -125,18 +139,18 @@ public class UserView extends javax.swing.JFrame {
                     .addComponent(txtPass)
                     .addComponent(jLabel6)
                     .addComponent(cbCateg, 0, 154, Short.MAX_VALUE))
-                .addGap(30, 30, 30))
+                .addGap(20, 20, 20))
         );
         mainWrapperLayout.setVerticalGroup(
             mainWrapperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainWrapperLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addGroup(mainWrapperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(mainWrapperLayout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(10, 10, 10)
                         .addComponent(lblAction)
-                        .addGap(29, 29, 29)
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -152,21 +166,23 @@ public class UserView extends javax.swing.JFrame {
                 .addGroup(mainWrapperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(cbCateg))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
-        btnAction.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnAction.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        btnAction.setForeground(new java.awt.Color(102, 102, 102));
         btnAction.setText("Cadastrar");
-        btnAction.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAction.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnAction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActionActionPerformed(evt);
             }
         });
 
-        btnCancel.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnCancel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        btnCancel.setForeground(new java.awt.Color(102, 102, 102));
         btnCancel.setText("Cancelar");
-        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
@@ -183,7 +199,7 @@ public class UserView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
                 .addComponent(btnAction, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -191,11 +207,11 @@ public class UserView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(mainWrapper, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAction, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -205,7 +221,7 @@ public class UserView extends javax.swing.JFrame {
         String cpf = txtCpf.getText();
         String name = txtName.getText();
         String passwd = txtPass.getText();
-        int categ = cbCateg.getSelectedIndex();
+        byte categ = (byte)cbCateg.getSelectedIndex();
         
         if(cpf.equals("") || !cpf.matches("^[0-9]{11}$")){
             JOptionPane.showMessageDialog(this, "Insira um CPF válido!", "Atenção", 0);
@@ -240,6 +256,7 @@ public class UserView extends javax.swing.JFrame {
             }
         }
         else{
+            // Update
             try {
                 success = dao.update(currentUser);
             } catch (SQLException ex) {
@@ -251,8 +268,11 @@ public class UserView extends javax.swing.JFrame {
             }
         }
         
-        if(success)
+        // Success message
+        if(success){
             JOptionPane.showMessageDialog(this, (user == null ? "Gravado" : "Alterado") + " com sucesso!", "Sucesso", 1);
+            this.dispose();
+        }
         else
             JOptionPane.showMessageDialog(this, "Erro ao " + (user == null ? "gravar" : "alterar") + "! Tente novamente!", "Erro", 0);
     }//GEN-LAST:event_btnActionActionPerformed
@@ -262,12 +282,19 @@ public class UserView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     private void txtPassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPassFocusLost
+        // Restrict password length
         try{
             txtPass.setText(txtPass.getText().substring(0,8));
-        } catch(Exception ex){
-            
-        }
+        } catch(Exception ex){ }
     }//GEN-LAST:event_txtPassFocusLost
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        if(isFirstUser){
+            LoginView lv = new LoginView();
+            lv.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -300,7 +327,7 @@ public class UserView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserView(null).setVisible(true);
+                new UserView(null, false).setVisible(true);
             }
         });
     }

@@ -40,7 +40,7 @@ public class FarmaWare {
         UserDAO dao = new UserDAO();
         List<User> users = null;
         try {
-            users = dao.getRecords("");
+            users = dao.getRecords("categ = 0");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro de SQL: \n" + ex.getMessage(), "Erro", 0);
         } catch (ClassNotFoundException ex) {
@@ -52,7 +52,7 @@ public class FarmaWare {
             lv.setVisible(true);
         }
         else{
-            UserView uv = new UserView(null);
+            UserView uv = new UserView(null, true);
             uv.setVisible(true);
         }
         

@@ -11,7 +11,7 @@ import java.util.List;
  * @author lucasdm
  */
 public class UserDAO implements DAO<User>{
-    private User user;
+    private User user = null;
     private java.sql.PreparedStatement pst; 
     private java.sql.ResultSet rs;
 
@@ -23,7 +23,7 @@ public class UserDAO implements DAO<User>{
         pst.setString(1, obj.getCpf());
         pst.setString(2, obj.getName());
         pst.setString(3, obj.getPasswd());
-        pst.setInt(4, obj.getCateg());
+        pst.setByte(4, obj.getCateg());
         
         if(pst.executeUpdate() > 0) {
             Database.close();
@@ -45,7 +45,7 @@ public class UserDAO implements DAO<User>{
         rs = pst.executeQuery();
         
         if(rs.next()) {
-            user = new User(rs.getString("cpf"),rs.getString("name"),rs.getString("passwd"),rs.getInt("categ"));
+            user = new User(rs.getString("cpf"),rs.getString("name"),rs.getString("passwd"),rs.getByte("categ"));
         }
         
         rs.close();
@@ -61,7 +61,7 @@ public class UserDAO implements DAO<User>{
         
         pst.setString(1, obj.getName());
         pst.setString(2, obj.getPasswd());
-        pst.setInt(3, obj.getCateg());
+        pst.setByte(3, obj.getCateg());
         pst.setString(4, obj.getCpf());
         
         if(pst.executeUpdate() > 0) {
@@ -106,7 +106,7 @@ public class UserDAO implements DAO<User>{
         rs = pst.executeQuery();
         
         while(rs.next()) {
-            user = new User(rs.getString("cpf"),rs.getString("name"),rs.getString("passwd"),rs.getInt("categ"));
+            user = new User(rs.getString("cpf"),rs.getString("name"),rs.getString("passwd"),rs.getByte("categ"));
             
             users.add(user);
         }

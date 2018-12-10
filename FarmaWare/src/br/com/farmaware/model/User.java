@@ -12,13 +12,13 @@ public class User {
     private String cpf;
     private String name;
     private String passwd;
-    private int categ;
+    private byte categ;
 
     public User(String cpf) {
         this.cpf = cpf;
     }
 
-    public User(String cpf, String name, String passwd, int categ) {
+    public User(String cpf, String name, String passwd, byte categ) {
         this.cpf = cpf;
         this.name = name;
         this.passwd = passwd;
@@ -49,11 +49,11 @@ public class User {
         this.passwd = passwd;
     }
 
-    public int getCateg() {
+    public byte getCateg() {
         return categ;
     }
 
-    public void setCateg(int categ) {
+    public void setCateg(byte categ) {
         this.categ = categ;
     }
 }

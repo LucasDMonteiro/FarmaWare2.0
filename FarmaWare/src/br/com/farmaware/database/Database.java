@@ -22,10 +22,10 @@ public class Database {
     
     static {
         user = "root";
-        password = "usbw";
+        password = "root";
         server = "localhost";
         database = "farmaware";
-        port = 3307;
+        port = 8889;
     }
     
     public static void open() throws ClassNotFoundException, SQLException{

@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author lucasdm
+ * @author michelenathalie
  */
 public class LoginView extends javax.swing.JFrame {
 
@@ -23,7 +24,6 @@ public class LoginView extends javax.swing.JFrame {
     public LoginView() {
         initComponents();
         this.setLocationRelativeTo(null);
-        //TODO: ask for auth
     }
 
     /**
@@ -40,9 +40,9 @@ public class LoginView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtCpf = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         lblRecoverPass = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -50,38 +50,40 @@ public class LoginView extends javax.swing.JFrame {
 
         mainWrapper.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Helvetica", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Login");
 
-        jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Helvetica", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("<html>Farma<b>Ware</b></html>");
 
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("CPF:");
 
-        txtPass.setColumns(8);
-        txtPass.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPassFocusLost(evt);
-            }
-        });
+        txtCpf.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Senha:");
 
-        lblRecoverPass.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        lblRecoverPass.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
         lblRecoverPass.setForeground(new java.awt.Color(102, 102, 102));
         lblRecoverPass.setText("<html><u>Esqueci minha senha</u></html>");
-        lblRecoverPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblRecoverPass.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lblRecoverPass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblRecoverPassMouseClicked(evt);
+            }
+        });
+
+        txtPass.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
+        txtPass.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPassFocusLost(evt);
             }
         });
 
@@ -92,36 +94,37 @@ public class LoginView extends javax.swing.JFrame {
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel2)
             .addGroup(mainWrapperLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addContainerGap(53, Short.MAX_VALUE)
                 .addGroup(mainWrapperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblRecoverPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(txtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                    .addComponent(txtPass))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblRecoverPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         mainWrapperLayout.setVerticalGroup(
             mainWrapperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainWrapperLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(20, 20, 20)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel1)
-                .addGap(26, 26, 26)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblRecoverPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
-        btnLogin.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        btnLogin.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(102, 102, 102));
         btnLogin.setText("Entrar");
         btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -136,17 +139,17 @@ public class LoginView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainWrapper, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(mainWrapper, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(20, 20, 20)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -154,7 +157,9 @@ public class LoginView extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String cpf = txtCpf.getText();
-        String passwd = txtPass.getText();
+        String passwd = "";
+        for(char c : txtPass.getPassword())
+            passwd += c;
         
         if(cpf.equals("") || !cpf.matches("^[0-9]{11}$")){
             JOptionPane.showMessageDialog(this, "Insira um CPF válido!", "Atenção", 0);
@@ -167,10 +172,11 @@ public class LoginView extends javax.swing.JFrame {
         }
         
         UserDAO dao = new UserDAO();
-        User currentUser = new User(txtCpf.getText());
-        List<User> list = null;
+        User currentUser = new User(cpf);
+        List<User> users = null;
+        
         try {
-            list = dao.getRecords("passwd = '" + txtPass.getText() + "'");
+            users = dao.getRecords("passwd = '" + passwd + "'");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Erro de SQL: \n" + ex.getMessage(), "Erro", 0);
             return;
@@ -179,28 +185,60 @@ public class LoginView extends javax.swing.JFrame {
             return;
         }
         
-        if(list != null && list.size() > 0){
-            ManagerView mv = new ManagerView(list.get(0));
+        if(users != null && users.size() > 0){
+            ManagerView mv = new ManagerView(users.get(0), this);
             mv.setVisible(true);
-            this.hide();
+            this.setVisible(false);
         }
         else{
-            JOptionPane.showMessageDialog(this, "CPF e/ou senha incorreta! Tente novamente!", "Erro", 0);
+            JOptionPane.showMessageDialog(this, "CPF e/ou senha incorreto(s)! Tente novamente!", "Erro", 0);
             return;
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void lblRecoverPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblRecoverPassMouseClicked
-        RecoverPassView rv = new RecoverPassView(new User(txtCpf.getText()));
+        String cpf = txtCpf.getText();
+        
+        // Input validation
+        if(cpf.equals("") || !cpf.matches("^[0-9]{11}$")){
+            JOptionPane.showMessageDialog(this, "Insira um CPF válido!", "Atenção", 0);
+            return;
+        }
+        
+        // User exists
+        UserDAO dao = new UserDAO();
+        User user = new User(cpf);
+        try {
+            user = dao.search(user);
+            
+            if (user == null){
+                JOptionPane.showMessageDialog(this, "Esse CPF não está cadastrado! Tente novamente.", "Erro", 0);
+                return;
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Erro de SQL: \n" + ex.getMessage(), "Erro", 0);
+            return;
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(this, "Erro de Classe: \n" + ex.getMessage(), "Erro", 0);
+            return;
+        }
+        
+        // Authentication
+        AuthView av = new AuthView();
+        av.setVisible(true);
+        
+        if(!av.getAuth())
+            return;
+        
+        RecoverPassView rv = new RecoverPassView(user);
         rv.setVisible(true);
     }//GEN-LAST:event_lblRecoverPassMouseClicked
 
     private void txtPassFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPassFocusLost
+        // Restrict password length
         try{
             txtPass.setText(txtPass.getText().substring(0,8));
-        } catch(Exception ex){
-            
-        }
+        } catch(Exception ex){ }
     }//GEN-LAST:event_txtPassFocusLost
 
     /**
@@ -247,6 +285,6 @@ public class LoginView extends javax.swing.JFrame {
     private javax.swing.JLabel lblRecoverPass;
     private javax.swing.JPanel mainWrapper;
     private javax.swing.JTextField txtCpf;
-    private javax.swing.JTextField txtPass;
+    private javax.swing.JPasswordField txtPass;
     // End of variables declaration//GEN-END:variables
 }
