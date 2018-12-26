@@ -20,7 +20,7 @@ public class SaleDAO implements DAO<Sale>{
     @Override
     public boolean insert(Sale obj) throws SQLException, ClassNotFoundException {
         Database.open();
-        pst = Database.getConnection().prepareStatement("INSERT INTO Sale values (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+        pst = Database.getConnection().prepareStatement("INSERT INTO Sale (clientCpf, sellerCpf, price) VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
         
         pst.setString(1, obj.getClientCpf());
         pst.setString(2, obj.getSellerCpf());
@@ -80,10 +80,9 @@ public class SaleDAO implements DAO<Sale>{
     @Override
     public boolean delete(Sale obj) throws SQLException, ClassNotFoundException {
         Database.open();
-        pst = Database.getConnection().prepareStatement("DELETE FROM Sale WHERE id = ?; DELETE FROM Sold WHERE saleId = ?");
+        pst = Database.getConnection().prepareStatement("DELETE FROM Sale WHERE id = ?;");
         
         pst.setInt(1, obj.getId());
-        pst.setInt(2, obj.getId());
         
         if(pst.executeUpdate() > 0) {
             Database.close();
@@ -98,7 +97,7 @@ public class SaleDAO implements DAO<Sale>{
 
     @Override
     public List<Sale> getRecords(String query) throws SQLException, ClassNotFoundException {
-        ArrayList<Sale> sales = new ArrayList();
+        ArrayList<Sale> sales = new ArrayList<>();
         sale = null;
         
         String sql = "SELECT * FROM Sale";

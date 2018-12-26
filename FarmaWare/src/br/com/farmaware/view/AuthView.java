@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author lucasdm
  * @author michelenathalie
  */
-public class AuthView extends javax.swing.JFrame {
+public class AuthView extends javax.swing.JDialog {
     private boolean isAuthenticated = false;
     private List<User> managers = null;
     /**
@@ -196,7 +196,7 @@ public class AuthView extends javax.swing.JFrame {
             if(selectedManagerName.equals(u.getName()) && passwd.equals(u.getPasswd())){
                 JOptionPane.showMessageDialog(this, "Autenticado com sucesso!", "Sucesso!", 1);
                 this.isAuthenticated = true;
-                this.dispose();
+                this.setVisible(false);
                 return;
             }
         }

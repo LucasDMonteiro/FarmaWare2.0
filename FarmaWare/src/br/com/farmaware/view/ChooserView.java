@@ -39,10 +39,15 @@ public class ChooserView extends javax.swing.JDialog {
         
         loadData();
         
+        String title = "";
+        
         switch(entity){
-            case CLIENT: lblAction.setText("Selecionar Cliente"); break;
-            case PRODUCT: lblAction.setText("Selecionar Produto"); break;
+            case CLIENT: title = "Selecionar Cliente"; break;
+            case PRODUCT: title = "Selecionar Produto"; break;
         }
+        
+        this.setTitle(title);
+        lblAction.setText(title);
         
         lstEntities.setModel(listModel);
     }
@@ -216,6 +221,8 @@ public class ChooserView extends javax.swing.JDialog {
         
         String value = lstEntities.getSelectedValue();
         
+        System.out.println("VALUE: " + value);
+        
         switch(entity){
             case CLIENT:
                 String cpf = value.split(":")[0];
@@ -236,7 +243,7 @@ public class ChooserView extends javax.swing.JDialog {
                 SaleableDAO sDao = new SaleableDAO();
                 Saleable saleable;
                 try{
-                    saleable = sDao.getRecords("name = " + value).get(0);
+                    saleable = sDao.getRecords("name = '" + value + "'").get(0);
                     this.selectedEntity = saleable;
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(this, "Erro de SQL: \n" + ex.getMessage(), "Erro", 0);
@@ -247,6 +254,8 @@ public class ChooserView extends javax.swing.JDialog {
                 }
             break;
         }
+        
+        this.setVisible(false);
     }//GEN-LAST:event_btnActionActionPerformed
 
     public Object getSelectedEntity(){

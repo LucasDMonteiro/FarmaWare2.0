@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  *
  * @author lucasdm
  */
-public class SaleableView extends javax.swing.JFrame {
+public class SaleableView extends javax.swing.JDialog {
     private Saleable saleable = null;
     private byte categ;
     /**
@@ -32,6 +32,7 @@ public class SaleableView extends javax.swing.JFrame {
             
             try {
                 saleable = new SaleableDAO().search(saleable);
+                // TODO: Check for null
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Erro de SQL: \n" + ex.getMessage(), "Erro", 0);
             } catch (ClassNotFoundException ex) {
@@ -43,6 +44,12 @@ public class SaleableView extends javax.swing.JFrame {
             txtManufc.setText(saleable.getManufc());
             txtPrice.setText(String.valueOf(saleable.getPrice()));
             spnStock.setValue(saleable.getStock());
+        }
+        else{
+            if(categ == Saleable.PRODUCT)
+                lblAction.setText("Cadastrar Produto");
+            if(categ == Saleable.DRUG)
+                lblAction.setText("Cadastrar Medicamento");
         }
         
         if(categ == Saleable.PRODUCT)
@@ -77,7 +84,7 @@ public class SaleableView extends javax.swing.JFrame {
         btnAction = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         mainWrapper.setBackground(new java.awt.Color(255, 255, 255));
@@ -235,7 +242,7 @@ public class SaleableView extends javax.swing.JFrame {
         String name = txtName.getText();
         String desc = txtDesc.getText();
         String manufc = txtManufc.getText();
-        String price = txtPrice.getText();
+        Double price = 0d;
         
         int stock = 0;
         try {
@@ -258,7 +265,15 @@ public class SaleableView extends javax.swing.JFrame {
             return;
         }
         
-        if(price.equals("") || !price.matches("^[0-9,.]*$")){
+        if(price.equals("")){
+            JOptionPane.showMessageDialog(this, "Insira um preço válido!", "Atenção", 0);
+            return;
+        }
+        
+        try{
+            price = Double.parseDouble(txtPrice.getText().replace("\\.","").replace(",","."));
+        }
+        catch(NumberFormatException ex){
             JOptionPane.showMessageDialog(this, "Insira um preço válido!", "Atenção", 0);
             return;
         }
@@ -266,11 +281,12 @@ public class SaleableView extends javax.swing.JFrame {
         
         boolean success = false;
         SaleableDAO dao = new SaleableDAO();
-        Saleable currentProduct = new Saleable(name, desc, manufc, Double.parseDouble(price), stock, categ);
+        Saleable currentProduct = null;
         
         if(saleable == null){
             // Insert
-            try {
+            try {                
+                currentProduct = new Saleable(name, desc, manufc, price, stock, categ);
                 success = dao.insert(currentProduct);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Erro de SQL: \n" + ex.getMessage(), "Erro", 0);
@@ -282,6 +298,7 @@ public class SaleableView extends javax.swing.JFrame {
         }
         else{
             try {
+                currentProduct = new Saleable(saleable.getId(),name, desc, manufc, price, stock, categ);
                 success = dao.update(currentProduct);
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this, "Erro de SQL: \n" + ex.getMessage(), "Erro", 0);

@@ -9,6 +9,7 @@ import br.com.farmaware.model.Sold;
 import br.com.farmaware.model.User;
 import java.sql.SQLException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.JOptionPane;
@@ -44,6 +45,8 @@ public class SaleView extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.seller = currentUser;
         cbPayment.setSelectedIndex(0);
+        
+        // TODO: listen for cell and combobox change and call updatePrice();
     }
 
     /**
@@ -194,10 +197,7 @@ public class SaleView extends javax.swing.JFrame {
         tblSolds.setForeground(new java.awt.Color(51, 51, 51));
         tblSolds.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nome", "Preço", "Qtd"
@@ -219,6 +219,11 @@ public class SaleView extends javax.swing.JFrame {
             }
         });
         tblSolds.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tblSolds.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tblSoldsKeyTyped(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblSolds);
 
         btnRemoveProduct.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
@@ -400,15 +405,20 @@ public class SaleView extends javax.swing.JFrame {
             return;
         }
         
+        if(tableModel.getRowCount() == 0){
+            JOptionPane.showMessageDialog(this, "Insira ao menos um produto para esta compra!", "Atenção", 0);
+            return;
+        }
+        
         // Write
         boolean success = false;
         SaleDAO sDao = new SaleDAO();
         
         //Get sold list
-        List<Sold> solds = null;
+        List<Sold> solds = new ArrayList<>();
         for (int i = 0; i < tableModel.getRowCount(); i++){
-            int saleableId = Integer.parseInt((String)tableModel.getValueAt(i, 0));
-            int qty = Integer.parseInt((String)tableModel.getValueAt(i, 3));
+            int saleableId = Integer.parseInt(tableModel.getValueAt(i, 0).toString());
+            int qty = Integer.parseInt(tableModel.getValueAt(i, 3).toString());
             Sold sold = new Sold(saleableId, 0, qty);
             solds.add(sold);
         }
@@ -466,18 +476,25 @@ public class SaleView extends javax.swing.JFrame {
         cv.setModal(true);
         cv.setVisible(true);
         Saleable saleable = (Saleable)cv.getSelectedEntity();
+        cv.dispose();
+        
+        System.out.println(saleable.toString());
+        
+        if(saleable == null)
+            return;
         
         for (int i = 0; i < tableModel.getRowCount(); i++){
-            if (saleable.getId() == Integer.parseInt((String)tableModel.getValueAt(i, 0))){
+            Object cellValue = tableModel.getValueAt(i, 0);
+            if(cellValue == null)
+                continue;
+            if (saleable.getId() == Integer.parseInt(cellValue.toString())){
                 JOptionPane.showMessageDialog(this, "Produto já adicionado à lista!", "Atenção", 0);
                 return;
             }
         }
         
-        if(saleable != null){
-            Object[] values = new Object[]{saleable.getName(), saleable.getPrice(), 1};
-            tableModel.addRow(values);
-        }
+        Object[] values = new Object[]{saleable.getId(), saleable.getName(), saleable.getPrice(), 1};
+        tableModel.addRow(values);
         
         updatePrice();
     }//GEN-LAST:event_btnAddProductActionPerformed
@@ -493,6 +510,10 @@ public class SaleView extends javax.swing.JFrame {
         updatePrice();
     }//GEN-LAST:event_btnRemoveProductActionPerformed
 
+    private void tblSoldsKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblSoldsKeyTyped
+        updatePrice();
+    }//GEN-LAST:event_tblSoldsKeyTyped
+
     private void updatePrice(){
         Locale brLocale = new Locale( "pt", "BR" );  
         NumberFormat realFormat = NumberFormat.getCurrencyInstance(brLocale); 
@@ -500,9 +521,10 @@ public class SaleView extends javax.swing.JFrame {
         // Total product prices
         totalProdPrice = 0d;
         for (int i = 0; i < tableModel.getRowCount(); i++){
-            double prodPrice = Double.parseDouble((String)tableModel.getValueAt(i, 2));
-            int qtd = Integer.parseInt((String)tableModel.getValueAt(i, 3));
-            totalProdPrice += prodPrice * qtd;
+            double prodPrice = Double.parseDouble(tableModel.getValueAt(i, 2).toString());
+            int qtd = Integer.parseInt(tableModel.getValueAt(i, 3).toString());
+            totalProdPrice += (prodPrice * qtd);
+            System.out.println(totalProdPrice);
         }
         lblProductPrice.setText(realFormat.format(totalProdPrice));
         

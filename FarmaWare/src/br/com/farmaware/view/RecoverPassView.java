@@ -179,7 +179,7 @@ public class RecoverPassView extends javax.swing.JFrame {
         }
         
         if(success){
-            JOptionPane.showMessageDialog(this, "Senha redefinida com sucesso!", "Sucesso", 2);
+            JOptionPane.showMessageDialog(this, "Senha redefinida com sucesso!", "Sucesso", 1);
             this.dispose();
         }
     }//GEN-LAST:event_btnRedefinirActionPerformed

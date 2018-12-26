@@ -386,9 +386,12 @@ public class ManagerView extends javax.swing.JFrame {
             // If it is a clerk, ask for authentication before opening the cashier
             if(currentUser.getCateg() == 1){
                 AuthView av = new AuthView();
+                av.setModal(true);
                 av.setVisible(true);
+                boolean isAuthenticated = av.getAuth();
+                av.dispose();
 
-                if (!av.getAuth())
+                if (!isAuthenticated)
                     return;
             }
         }
@@ -403,13 +406,11 @@ public class ManagerView extends javax.swing.JFrame {
             return;
         
         RecordView rv = new RecordView(RecordView.USERS);
-        rv.setModal(true);
         rv.setVisible(true);
     }//GEN-LAST:event_pnlBtnUsersMouseClicked
 
     private void pnlBtnClientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBtnClientsMouseClicked
         RecordView rv = new RecordView(RecordView.CLIENTS);
-        rv.setModal(true);
         rv.setVisible(true);
     }//GEN-LAST:event_pnlBtnClientsMouseClicked
 
@@ -426,7 +427,6 @@ public class ManagerView extends javax.swing.JFrame {
             return;
         
         RecordView rv = new RecordView(RecordView.DRUGS);
-        rv.setModal(true);
         rv.setVisible(true);
     }//GEN-LAST:event_pnlBtnDrugsMouseClicked
 
@@ -435,7 +435,6 @@ public class ManagerView extends javax.swing.JFrame {
             return;
         
         RecordView rv = new RecordView(RecordView.PRODUCTS);
-        rv.setModal(true);
         rv.setVisible(true);
     }//GEN-LAST:event_pnlBtnProductsMouseClicked
 
@@ -444,11 +443,15 @@ public class ManagerView extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
     
     private void changePnlBtnColor(boolean isOver, JPanel panel){
+        if(!panel.isEnabled())
+            return;
         panel.setBackground((isOver ? Color.lightGray : Color.WHITE));
     }
     
     private void logout(){
+        this.isCashierOpen = false;
         this.dispose();
+        ((LoginView)parent).clearFields();
         parent.setVisible(true);
     }
     /**

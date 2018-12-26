@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  * @author lucasdm
  * @author michelenathalie
  */
-public class RecordView extends javax.swing.JDialog {
+public class RecordView extends javax.swing.JFrame {
     private byte entity;
     
     // Entity constants
@@ -146,7 +146,7 @@ public class RecordView extends javax.swing.JDialog {
                 try{
                     sales = dao.getRecords("");
                     for(Sale sale : sales){
-                        Object[] values = new Object[]{sale.getId(), "(...)", sale.getClientCpf(), sale.getSellerCpf(), sale.getPrice()};
+                        Object[] values = new Object[]{sale.getId(), sale.getSolds().size(), sale.getClientCpf(), sale.getSellerCpf(), sale.getPrice()};
                         tableModel.addRow(values);
                     }
                 } catch (SQLException ex) {
@@ -172,14 +172,13 @@ public class RecordView extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
-        txtPass = new javax.swing.JPasswordField();
-        jLabel11 = new javax.swing.JLabel();
         btnDelete = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         btnInsert = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(625, 496));
 
         mainWrapper.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -213,12 +212,6 @@ public class RecordView extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblData);
 
-        txtPass.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
-
-        jLabel11.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel11.setText("Nova Senha:");
-
         javax.swing.GroupLayout mainWrapperLayout = new javax.swing.GroupLayout(mainWrapper);
         mainWrapper.setLayout(mainWrapperLayout);
         mainWrapperLayout.setHorizontalGroup(
@@ -229,12 +222,7 @@ public class RecordView extends javax.swing.JDialog {
                     .addComponent(lblAction, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mainWrapperLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addGroup(mainWrapperLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(mainWrapperLayout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
-                            .addComponent(txtPass, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
         );
         mainWrapperLayout.setVerticalGroup(
@@ -244,13 +232,9 @@ public class RecordView extends javax.swing.JDialog {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(lblAction)
-                .addGap(20, 20, 20)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
         );
 
         btnDelete.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
@@ -299,7 +283,7 @@ public class RecordView extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainWrapper, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,7 +291,7 @@ public class RecordView extends javax.swing.JDialog {
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,7 +315,8 @@ public class RecordView extends javax.swing.JDialog {
             return;
         }
         
-        int index = Integer.parseInt((String) tableModel.getValueAt(tblData.getSelectedRow(), 0));
+        String primaryKey = tableModel.getValueAt(tblData.getSelectedRow(), 0).toString();
+        int index = 0;
         
         if(JOptionPane.showConfirmDialog(null, "Deseja realmente deletar este registro permanentemente?") != JOptionPane.OK_OPTION)
             return;
@@ -340,7 +325,7 @@ public class RecordView extends javax.swing.JDialog {
         
         switch(entity){
             case USERS: 
-                User user = new User(tblData.getValueAt(index,0).toString());
+                User user = new User(primaryKey);
                 dao = new UserDAO(); 
 
                 try {
@@ -352,7 +337,7 @@ public class RecordView extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Erro de Classe: \n" + ex.getMessage(), "Erro", 0);
                 } break;
             case CLIENTS: 
-                Client client = new Client(tblData.getValueAt(index,0).toString());
+                Client client = new Client(primaryKey);
                 dao = new ClientDAO(); 
 
                 try {
@@ -364,6 +349,7 @@ public class RecordView extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Erro de Classe: \n" + ex.getMessage(), "Erro", 0);
                 } break;
             case DRUGS: 
+                index = Integer.parseInt(primaryKey);
                 Saleable drug = new Saleable(index);
                 dao = new SaleableDAO(); 
 
@@ -376,6 +362,7 @@ public class RecordView extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Erro de Classe: \n" + ex.getMessage(), "Erro", 0);
                 } break;
             case PRODUCTS: 
+                index = Integer.parseInt(primaryKey);
                 Saleable product = new Saleable(index);
                 dao = new SaleableDAO(); 
 
@@ -388,6 +375,7 @@ public class RecordView extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Erro de Classe: \n" + ex.getMessage(), "Erro", 0);
                 } break;
             case SALES: 
+                index = Integer.parseInt(primaryKey);
                 Sale sale = new Sale(index);
                 dao = new SaleDAO(); 
 
@@ -405,29 +393,36 @@ public class RecordView extends javax.swing.JDialog {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        int index = Integer.parseInt((String) tableModel.getValueAt(tblData.getSelectedRow(), 0));
-        
-        if(index < 0){
+        if(tblData.getSelectedRow() < 0){
             JOptionPane.showMessageDialog(this, "Selecione um registro!", "Atenção", 0);
             return;
         }
         
+        String primaryKey = tableModel.getValueAt(tblData.getSelectedRow(), 0).toString();
+        int index = 0;
+        
         switch(entity){
             case USERS: 
-                User user = new User(tblData.getValueAt(index,0).toString());
+                User user = new User(primaryKey);
                 UserView uv = new UserView(user, false);
+                uv.setModal(true);
                 uv.setVisible(true); break;
             case CLIENTS: 
-                Client client = new Client(tblData.getValueAt(index,0).toString());
+                Client client = new Client(primaryKey);
                 ClientView cv = new ClientView(client);
+                cv.setModal(true);
                 cv.setVisible(true); break;
             case DRUGS: 
+                index = Integer.parseInt(primaryKey);
                 Saleable drug = new Saleable(index);
                 SaleableView dv = new SaleableView(drug, Saleable.DRUG);
+                dv.setModal(true);
                 dv.setVisible(true); break;
             case PRODUCTS: 
+                index = Integer.parseInt(primaryKey);
                 Saleable product = new Saleable(index);
                 SaleableView pv = new SaleableView(product, Saleable.PRODUCT);
+                pv.setModal(true);
                 pv.setVisible(true); break;
         }
         
@@ -442,15 +437,19 @@ public class RecordView extends javax.swing.JDialog {
         switch(entity){
             case USERS: 
                 UserView uv = new UserView(null, false);
+                uv.setModal(true);
                 uv.setVisible(true); break;
             case CLIENTS: 
                 ClientView cv = new ClientView(null);
+                cv.setModal(true);
                 cv.setVisible(true); break;
             case DRUGS: 
                 SaleableView dv = new SaleableView(null, Saleable.DRUG);
+                dv.setModal(true);
                 dv.setVisible(true); break;
             case PRODUCTS: 
                 SaleableView pv = new SaleableView(null, Saleable.PRODUCT);
+                pv.setModal(true);
                 pv.setVisible(true); break;
         }
         
@@ -524,12 +523,10 @@ public class RecordView extends javax.swing.JDialog {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnInsert;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAction;
     private javax.swing.JPanel mainWrapper;
     private javax.swing.JTable tblData;
-    private javax.swing.JPasswordField txtPass;
     // End of variables declaration//GEN-END:variables
 }

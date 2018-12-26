@@ -11,14 +11,14 @@ import java.util.List;
  * @author lucasdm
  */
 public class SaleableDAO implements DAO<Saleable>{
-    private Saleable product;
+    private Saleable saleable;
     private java.sql.PreparedStatement pst; 
     private java.sql.ResultSet rs;
 
     @Override
     public boolean insert(Saleable obj) throws SQLException, ClassNotFoundException {
         Database.open();
-        pst = Database.getConnection().prepareStatement("INSERT INTO Saleable values (?, ?, ?, ?, ?, ?);");
+        pst = Database.getConnection().prepareStatement("INSERT INTO Saleable(name, description, manufc, price, stock, categ) VALUES (?, ?, ?, ?, ?, ?);");
         
         pst.setString(1, obj.getName());
         pst.setString(2, obj.getDesc());
@@ -26,6 +26,8 @@ public class SaleableDAO implements DAO<Saleable>{
         pst.setDouble(4, obj.getPrice());
         pst.setInt(5, obj.getStock());
         pst.setByte(6, obj.getCateg());
+        
+        System.out.println(pst.toString());
         
         if(pst.executeUpdate() > 0) {
             Database.close();
@@ -47,19 +49,19 @@ public class SaleableDAO implements DAO<Saleable>{
         rs = pst.executeQuery();
         
         if(rs.next()) {
-            product = new Saleable(rs.getInt("id"), rs.getString("name"),rs.getString("desc"),rs.getString("lab"),rs.getDouble("price"),  rs.getInt("stock"), rs.getByte("categ"));
+            saleable = new Saleable(rs.getInt("id"), rs.getString("name"),rs.getString("description"),rs.getString("manufc"),rs.getDouble("price"),  rs.getInt("stock"), rs.getByte("categ"));
         }
         
         rs.close();
         Database.close();
         
-        return product;
+        return saleable;
     }
 
     @Override
     public boolean update(Saleable obj) throws SQLException, ClassNotFoundException {
         Database.open();
-        pst = Database.getConnection().prepareStatement("UPDATE Saleable SET name = ?, desc = ?, manufc = ?, price = ?, stock = ?, categ = ? WHERE id = ?;");
+        pst = Database.getConnection().prepareStatement("UPDATE Saleable SET name = ?, description = ?, manufc = ?, price = ?, stock = ?, categ = ? WHERE id = ?;");
         
         pst.setString(1, obj.getName());
         pst.setString(2, obj.getDesc());
@@ -68,6 +70,8 @@ public class SaleableDAO implements DAO<Saleable>{
         pst.setInt(5, obj.getStock());
         pst.setByte(6, obj.getCateg());
         pst.setInt(7, obj.getId());
+        
+        System.out.println(pst.toString());
                 
         if(pst.executeUpdate() > 0) {
             Database.close();
@@ -98,8 +102,8 @@ public class SaleableDAO implements DAO<Saleable>{
 
     @Override
     public List<Saleable> getRecords(String query) throws SQLException, ClassNotFoundException {
-        ArrayList<Saleable> products = new ArrayList();
-        product = null;
+        ArrayList<Saleable> saleables = new ArrayList();
+        saleable = null;
         
         String sql = "SELECT * FROM Saleable";
         if(query.length() > 0)
@@ -111,15 +115,15 @@ public class SaleableDAO implements DAO<Saleable>{
         rs = pst.executeQuery();
         
         while(rs.next()) {
-            product = new Saleable(rs.getInt("id"), rs.getString("name"),rs.getString("desc"),rs.getString("manufc"),rs.getDouble("price"),  rs.getInt("stock"), rs.getByte("categ"));
+            saleable = new Saleable(rs.getInt("id"), rs.getString("name"),rs.getString("description"),rs.getString("manufc"),rs.getDouble("price"),  rs.getInt("stock"), rs.getByte("categ"));
             
-            products.add(product);
+            saleables.add(saleable);
         }
         
         rs.close();
         Database.close();
         
-        return products;
+        return saleables;
     }
     
 }

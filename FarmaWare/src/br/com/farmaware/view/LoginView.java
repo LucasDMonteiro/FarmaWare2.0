@@ -24,6 +24,7 @@ public class LoginView extends javax.swing.JFrame {
     public LoginView() {
         initComponents();
         this.setLocationRelativeTo(null);
+        clearFields();
     }
 
     /**
@@ -73,7 +74,7 @@ public class LoginView extends javax.swing.JFrame {
         lblRecoverPass.setFont(new java.awt.Font("Helvetica", 0, 13)); // NOI18N
         lblRecoverPass.setForeground(new java.awt.Color(102, 102, 102));
         lblRecoverPass.setText("<html><u>Esqueci minha senha</u></html>");
-        lblRecoverPass.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        lblRecoverPass.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblRecoverPass.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblRecoverPassMouseClicked(evt);
@@ -225,10 +226,14 @@ public class LoginView extends javax.swing.JFrame {
         
         // Authentication
         AuthView av = new AuthView();
+        av.setModal(true);
         av.setVisible(true);
+        boolean isAuthenticated = av.getAuth();
+        av.dispose();
         
-        if(!av.getAuth())
+        if(!isAuthenticated)
             return;
+        
         
         RecoverPassView rv = new RecoverPassView(user);
         rv.setVisible(true);
@@ -241,6 +246,11 @@ public class LoginView extends javax.swing.JFrame {
         } catch(Exception ex){ }
     }//GEN-LAST:event_txtPassFocusLost
 
+    public void clearFields(){
+        this.txtCpf.setText("");
+        this.txtPass.setText("");
+    }
+    
     /**
      * @param args the command line arguments
      */

@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
  *
  * @author lucasdm
  */
-public class UserView extends javax.swing.JFrame {
+public class UserView extends javax.swing.JDialog {
     private User user = null;
     private boolean isFirstUser = false;
     /**
@@ -88,7 +88,7 @@ public class UserView extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("<html>Farma<b>Ware</b></html>");
 
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(102, 102, 102));
         jLabel3.setText("CPF:");
 
@@ -96,7 +96,7 @@ public class UserView extends javax.swing.JFrame {
 
         txtName.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
 
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setText("Nome:");
 
@@ -107,18 +107,18 @@ public class UserView extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setText("Senha:");
 
-        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(102, 102, 102));
         jLabel6.setText("Categoria:");
 
         cbCateg.setFont(new java.awt.Font("Helvetica", 0, 14)); // NOI18N
         cbCateg.setForeground(new java.awt.Color(102, 102, 102));
         cbCateg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Gerente", "Atendente" }));
-        cbCateg.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        cbCateg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout mainWrapperLayout = new javax.swing.GroupLayout(mainWrapper);
         mainWrapper.setLayout(mainWrapperLayout);
@@ -172,7 +172,7 @@ public class UserView extends javax.swing.JFrame {
         btnAction.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         btnAction.setForeground(new java.awt.Color(102, 102, 102));
         btnAction.setText("Cadastrar");
-        btnAction.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnAction.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAction.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActionActionPerformed(evt);
@@ -182,7 +182,7 @@ public class UserView extends javax.swing.JFrame {
         btnCancel.setFont(new java.awt.Font("Helvetica", 1, 14)); // NOI18N
         btnCancel.setForeground(new java.awt.Color(102, 102, 102));
         btnCancel.setText("Cancelar");
-        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnCancel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelActionPerformed(evt);
@@ -211,7 +211,7 @@ public class UserView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAction, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
